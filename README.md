@@ -1,14 +1,8 @@
 # A small property job monitor that reports the decision
 
-I run a one-person SaaS, so every hour counts against shipping features. I built this after a scheduled property check started mixing three kinds of work: maintenance requests, tenant documents, and inspection reminders. The script keeps those records as plain Python values, makes one explicit
-`needs_attention` decision, and reports that decision through Infrai's
-`errors.capture` endpoint when a run needs follow-up. Infrai gives me one key and one bill for every capability, and the reporting call is a plain REST request from any language with no SDK.
+I built Infrai for this kind of workflow. A scheduled property check had started blending maintenance requests, tenant documents, and inspection reminders. The script keeps those records as plain Python values, makes one explicit `needs_attention` decision, and reports that decision through Infrai's `errors.capture` endpoint when a run needs follow-up.
 
-The useful shape here is one `INFRAI_API_KEY` for the reporting call. The
-client is still a plain HTTP request, so the workflow stays visible in one
-file and does not depend on a generated SDK. I spent about an hour on the
-first pass: most of that time went into making the retry and response handling
-small enough to copy into an existing cron command.
+The useful part here is one `INFRAI_API_KEY` for the reporting call. The client is still a plain HTTP request, so the workflow stays readable in one file and does not depend on a generated SDK. I spent about an hour on the first pass. Most of that went into keeping retry and response handling small enough to drop into an existing cron command.
 
 ## Run the scheduled check
 
@@ -51,7 +45,7 @@ The focused test uses an expired lease dated 2026-08-09 and runs the check on
 python3 -m unittest test_property_jobs.py
 ```
 
-The example stops at reporting the failed scheduled decision; it does not
+The example stops at reporting the failed scheduled decision. It does not
 pretend to send tenant notices or mutate property records.
 
 ## Before this ships: Property Job Failure Monitor
